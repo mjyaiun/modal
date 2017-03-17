@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<title>Bootstrap 实例 - 模态框（Modal）插件方法</title>
+	<link type="text/css" rel="stylesheet" href="css/style.css" >
+	<link type="text/css" rel="stylesheet" href="css/bootstrap.css" >
+	<link type="text/css" rel="stylesheet" href="fonts/font-awesome-4/css/font-awesome.min.css">
+		
+	<style type="text/css">
+		body{
+			opacity: 1;
+			margin-left: 20px;
+			background-color: #fff;
+		}
+		body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 { font-family: Microsoft YaHei,'宋体' , Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;}
+	</style>
+	
+</head>
+<body>
+	<h2>模态框（Modal）插件方法</h2>
+	<div>
+		新增：<button class="btn btn-primary-outline" data-toggle="modal" data-target="#myModal" data-whatever="新增" aria-hidden="true" data-backdrop="static" data-keyboard="true">添加</button>
+		编辑：<button class="btn btn-success-outline" data-toggle="modal" data-target="#myModal" data-whatever="编辑" aria-hidden="true" data-backdrop="static" data-keyboard="true">编辑</button>
+		删除：<button class="btn btn-warning" data-toggle="modal" data-target="#myModal" data-whatever="删除" aria-hidden="true" data-backdrop="static" data-keyboard="true">删除</button>
+	</div>
+	
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title">设备</h4>
+				</div>
+				<div class="modal-body col-sm-12">
+					<form id="frm" class="form-horizontal" role="form" novalidate="" >
+						
+					
+					</form>
+				</div>
+				<div class="modal-footer">
+					<div class="col-sm-6" align="right"><button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button></div>
+					<div class="col-sm-6" align="left"><button type="button" class="btn btn-primary-outline" id="saveModal">保存</button></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	</br>
+	<h2>告警框</h2>
+	 <button class="btn btn-primary" onclick="loadPage('test.html')">onload</button>
+	 <div id="test"></div>	 
+	 
+
+
+	<br>
+	<div id="setcl" style="width:100%; height:900px; background:#ddd; padding:50px">confirm、alert方法封装，需调用bootstrap和jquery<br /><br />
+		<input type="button" value="短文字ALERT" onclick="confirmMsg({title:null, mess:'错误信息来了', ico:'error'}, function(){$('#setcl').css('color','red')})"/>
+		<input type="button" value="短文字CONFIRM" onclick="confirmMsg({title:null, mess:null, ico:'primary'}, function(){$('#setcl').css('color','green')})" />
+	</div>
+
+
+
+
+<script src="js/jquery-1.12.4.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/mjs.js"></script>
+
+
+<script>
+function loadPage(href) {
+	$("#test").load(href, function () {
+	});
+}
+
+
+////////////////////////////////////////
+$(function () {
+	$('#myModal').on('show.bs.modal', function(event){
+   	var button = $(event.relatedTarget);
+      var recipient = button.data('whatever');
+      //var modal = $(this);
+      loadModalfrm('frm.html', recipient)
+      
+      
+      $('#saveModal').off('click').on('click', function () {
+			var o = $('#frm').serializeObject();
+			console.log(o);
+		})
+   });
+   
+});
+
+
+function loadModalfrm(href, recipient) {
+	$('.modal-title').text(recipient+"SIM卡");
+	$("#frm").load(href, function () {
+		if(recipient === "新增"){
+      	$('#txt').val("我是'"+recipient+"'");
+         //新增处理
+      }else if(recipient === "编辑"){
+      	$('#txt').val("我是'"+recipient+"'");
+         //编辑处理
+      }
+	});
+}
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
